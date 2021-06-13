@@ -1,6 +1,8 @@
 import { FETCH_ALL, CREATE, DELETE } from "../constants/ActionTypes";
 
-export default (notes = [], action) => {
+const initialState = [];
+
+export default (notes = initialState, action) => {
   switch (action.type) {
     case FETCH_ALL:
       return action.payload;

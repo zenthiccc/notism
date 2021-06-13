@@ -2,7 +2,6 @@ import React from "react";
 import Container from "@material-ui/core/Container";
 import NoteCard from "../components/NoteCard";
 import Masonry from "react-masonry-css";
-
 import { useSelector } from "react-redux";
 
 export default function Notes() {

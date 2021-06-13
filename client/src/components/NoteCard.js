@@ -10,15 +10,16 @@ import Avatar from "@material-ui/core/Avatar";
 import { blue, green, pink, yellow } from "@material-ui/core/colors";
 import { useDispatch } from "react-redux";
 import { deleteNote } from "../actions/notes";
+import { MONEY, TODOS, WORK } from "../constants/Categories";
 
 const useStyles = makeStyles({
   avatar: {
     backgroundColor: (note) => {
-      if (note.category == "Work") {
+      if (note.category == WORK) {
         return yellow[700];
-      } else if (note.category == "Money") {
+      } else if (note.category == MONEY) {
         return green[700];
-      } else if (note.category == "Todos") {
+      } else if (note.category == TODOS) {
         return pink[700];
       }
       return blue[700];

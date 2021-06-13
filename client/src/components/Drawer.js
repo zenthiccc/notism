@@ -8,13 +8,16 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { useHistory, useLocation } from "react-router";
-import { AddCircleOutlineOutlined, SubjectOutlined } from "@material-ui/icons";
-import { format } from "date-fns";
+import {
+  AddCircleOutlineOutlined,
+  SubjectOutlined,
+  Menu,
+} from "@material-ui/icons";
+import Moment from "react-moment";
 
 const drawerWidth = 240;
 
@@ -40,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
-  // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
@@ -53,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   active: {
-    background: "#808080" //dark mode - #808080, light mode #f4f4f4
+    background: theme.palette.action.hover,
   },
 }));
 
@@ -64,6 +66,7 @@ function ResponsiveDrawer(props) {
   const history = useHistory();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const date = new Date();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -96,16 +99,16 @@ function ResponsiveDrawer(props) {
       >
         <Toolbar>
           <IconButton
-            color="inherit"
+            color="secondary"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
             className={classes.menuButton}
           >
-            <MenuIcon />
+            <Menu />
           </IconButton>
           <Typography noWrap>
-            Today is {format(new Date(), "do MMMM Y")}
+            Today is <Moment format="LL">{date}</Moment>
           </Typography>
         </Toolbar>
       </AppBar>
@@ -121,7 +124,7 @@ function ResponsiveDrawer(props) {
               paper: classes.drawerPaper,
             }}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true,
             }}
           >
             <div>
