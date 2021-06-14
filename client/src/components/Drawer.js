@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppBar from "@material-ui/core/AppBar";
+import Avatar from "@material-ui/core/Avatar";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
@@ -10,15 +12,18 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core/styles";
 import { useHistory, useLocation } from "react-router";
 import {
   AddCircleOutlineOutlined,
   SubjectOutlined,
   Menu,
 } from "@material-ui/icons";
-import Moment from "react-moment";
-
+import { useDispatch } from "react-redux";
+import { GoogleLogin } from "react-google-login";
+import Icon from "../helpers/Icon";
+import { AUTH, LOGOUT } from "../constants/ActionTypes";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -53,20 +58,30 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     padding: theme.spacing(2),
+    textDecoration: "none",
   },
   active: {
     background: theme.palette.action.hover,
+  },
+  profile: {
+    display: "flex",
+    justifyContent: "space-between",
+    width: "300px",
+  },
+  userName: {
+    display: "flex",
+    alignItems: "center",
   },
 }));
 
 function ResponsiveDrawer(props) {
   const { window } = props;
   const classes = useStyles();
-  const theme = useTheme();
   const history = useHistory();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const date = new Date();
+  const dispatch = useDispatch();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -76,7 +91,7 @@ function ResponsiveDrawer(props) {
     {
       text: "My Notes",
       icon: <SubjectOutlined color="secondary" />,
-      path: "/",
+      path: "/notes",
     },
     {
       text: "Create Notes",
@@ -87,6 +102,37 @@ function ResponsiveDrawer(props) {
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
+
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+
+  const logout = () => {
+    dispatch({ type: LOGOUT });
+
+    history.push("/");
+
+    setUser(null);
+  };
+
+  useEffect(() => {
+    const token = user?.token;
+
+    setUser(JSON.parse(localStorage.getItem("profile")));
+  }, [location]);
+  const googleSuccess = async (res) => {
+    const result = res?.profileObj;
+    const token = res?.tokenId;
+
+    try {
+      dispatch({ type: AUTH, data: { result, token } });
+
+      history.push("/notes");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const googleFailure = (error) => {
+    console.error(error);
+  };
 
   return (
     <div className={classes.root}>
@@ -107,9 +153,38 @@ function ResponsiveDrawer(props) {
           >
             <Menu />
           </IconButton>
-          <Typography noWrap>
-            Today is <Moment format="LL">{date}</Moment>
-          </Typography>
+          {user ? (
+            <div className={classes.profile}>
+              <Avatar alt={user.result.name} src={user.result.imageUrl}>
+                {user.result.name.charAt(0)}
+              </Avatar>
+              <Typography className={classes.userName}>
+                {user.result.name}
+              </Typography>
+              <Button variant="contained" color="secondary" onClick={logout}>
+                Logout
+              </Button>
+            </div>
+          ) : (
+            <GoogleLogin
+              clientId="1069263014307-8qilgtsfn74btpbghcdblhqpmlpiqpca.apps.googleusercontent.com"
+              render={(renderProps) => (
+                <Button
+                  className={classes.googleButton}
+                  color="secondary"
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                  startIcon={<Icon />}
+                  variant="contained"
+                >
+                  Google Login
+                </Button>
+              )}
+              onSuccess={googleSuccess}
+              onFailure={googleFailure}
+              cookiePolicy="single_host_origin"
+            />
+          )}
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
@@ -132,21 +207,28 @@ function ResponsiveDrawer(props) {
                 Notism
               </Typography>
             </div>
-            <List>
-              {menuItems.map((item) => (
-                <ListItem
-                  button
-                  key={item.text}
-                  onClick={() => history.push(item.path)}
-                  className={
-                    location.pathname === item.path ? classes.active : null
-                  }
-                >
-                  <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText primary={item.text} />
-                </ListItem>
-              ))}
-            </List>
+            {user ? (
+              <List>
+                {menuItems.map((item) => (
+                  <ListItem
+                    button
+                    key={item.text}
+                    onClick={() => history.push(item.path)}
+                    className={
+                      location.pathname === item.path ? classes.active : null
+                    }
+                  >
+                    <ListItemIcon>{item.icon}</ListItemIcon>
+                    <ListItemText primary={item.text} />
+                  </ListItem>
+                ))}
+              </List>
+            ) : (
+              <div>
+                <Divider />
+                <Typography>Login to view and create notes</Typography>
+              </div>
+            )}
           </Drawer>
         </Hidden>
         <Hidden xsDown implementation="css">
@@ -162,26 +244,34 @@ function ResponsiveDrawer(props) {
                 Notism
               </Typography>
             </div>
-            <List>
-              {menuItems.map((item) => (
-                <ListItem
-                  button
-                  key={item.text}
-                  onClick={() => history.push(item.path)}
-                  className={
-                    location.pathname === item.path ? classes.active : null
-                  }
-                >
-                  <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText primary={item.text} />
-                </ListItem>
-              ))}
-            </List>
+            {user ? (
+              <List>
+                {menuItems.map((item) => (
+                  <ListItem
+                    button
+                    key={item.text}
+                    onClick={() => history.push(item.path)}
+                    className={
+                      location.pathname === item.path ? classes.active : null
+                    }
+                  >
+                    <ListItemIcon>{item.icon}</ListItemIcon>
+                    <ListItemText primary={item.text} />
+                  </ListItem>
+                ))}
+              </List>
+            ) : (
+              <div>
+                <Divider />
+                <Typography>Login to view and create notes</Typography>
+              </div>
+            )}
           </Drawer>
         </Hidden>
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
+        {user ? null : <Typography variant="h1">Welcome to Notism!</Typography>}
       </main>
     </div>
   );

@@ -53,7 +53,7 @@ export default function Create() {
       setCategoryError(true);
     }
     if (noteData.title && noteData.details && noteData.category) {
-      dispatch(createNote(noteData)).then(() => history.push("/"));
+      dispatch(createNote(noteData)).then(() => history.push("/notes"));
     }
   };
   return (
