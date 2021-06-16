@@ -1,21 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Card from "@material-ui/core/Card";
-import axios from "axios";
-import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
-import Masonry from "react-masonry-css";
-import IconButton from "@material-ui/core/IconButton";
+import { Card, Container, Typography, IconButton } from "@material-ui/core";
 import { DeleteOutlined } from "@material-ui/icons";
-
+import Masonry from "react-masonry-css";
+import { Delete, getWithoutID } from "../../api/note";
 export default function Home() {
   const [notes, setNotes] = useState([]);
   const [token, setToken] = useState("");
 
   const getNotes = async (token) => {
-    const res = await axios.get("api/notes", {
-      headers: { Authorization: token },
-    });
+    const res = await getWithoutID(token);
     setNotes(res.data);
   };
 
@@ -30,9 +24,7 @@ export default function Home() {
   const deleteNote = async (id) => {
     try {
       if (token) {
-        await axios.delete(`api/notes/${id}`, {
-          headers: { Authorization: token },
-        });
+        await Delete(id, token);
         getNotes(token);
       }
     } catch (error) {

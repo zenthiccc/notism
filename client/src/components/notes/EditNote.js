@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useHistory } from "react-router-dom";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
+import { Typography, Button, TextField } from "@material-ui/core";
+import { Edit, getWithID } from "../../api/note";
 
 export default function EditNote({ match }) {
   const [note, setNote] = useState({
@@ -17,9 +15,7 @@ export default function EditNote({ match }) {
     const getNote = async () => {
       const token = localStorage.getItem("tokenStore");
       if (match.params.id) {
-        const res = await axios.get(`/api/notes/${match.params.id}`, {
-          headers: { Authorization: token },
-        });
+        const res = await getWithID(match.params.id, token);
         setNote({
           title: res.data.title,
           content: res.data.content,
@@ -46,9 +42,7 @@ export default function EditNote({ match }) {
           content,
         };
 
-        await axios.put(`/api/notes/${id}`, newNote, {
-          headers: { Authorization: token },
-        });
+        await Edit(id, newNote, token);
 
         return history.push("/");
       }

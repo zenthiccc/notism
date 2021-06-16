@@ -2,7 +2,7 @@ const Users = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const userCtrl = {
+const userController = {
   registerUser: async (req, res) => {
     try {
       const { username, email, password } = req.body;
@@ -19,7 +19,7 @@ const userCtrl = {
       await newUser.save();
       res.json({ msg: "Sign up Success" });
     } catch (err) {
-      return res.status(500).json({ msg: err.message });
+      console.error(err);
     }
   },
   loginUser: async (req, res) => {
@@ -38,7 +38,7 @@ const userCtrl = {
 
       res.json({ token });
     } catch (err) {
-      return res.status(500).json({ msg: err.message });
+      console.error(err);
     }
   },
   verifiedToken: (req, res) => {
@@ -55,9 +55,9 @@ const userCtrl = {
         return res.send(true);
       });
     } catch (err) {
-      return res.status(500).json({ msg: err.message });
+      console.error(err);
     }
   },
 };
 
-module.exports = userCtrl;
+module.exports = userController;

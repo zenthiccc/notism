@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import { Typography, Button } from "@material-ui/core";
 
 export default function Nav({ setIsLogin }) {
   const logoutSubmit = () => {

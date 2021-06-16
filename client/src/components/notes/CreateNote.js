@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useHistory } from "react-router-dom";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
+import { Typography, Button, TextField } from "@material-ui/core";
+import { Create } from "../../api/note";
 
 export default function CreateNote() {
   const [note, setNote] = useState({
@@ -28,9 +26,7 @@ export default function CreateNote() {
           content,
         };
 
-        await axios.post("/api/notes", newNote, {
-          headers: { Authorization: token },
-        });
+        await Create(newNote, token);
 
         return history.push("/");
       }

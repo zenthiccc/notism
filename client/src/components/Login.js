@@ -1,13 +1,19 @@
 import React, { useState } from "react";
-import axios from "axios";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
-import Paper from "@material-ui/core/Paper";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+import { userRegister, userLogin } from "../api/user";
+import {
+  Typography,
+  Container,
+  Paper,
+  TextField,
+  Button,
+} from "@material-ui/core";
 
 export default function Login({ setIsLogin }) {
-  const [user, setUser] = useState({ name: "", email: "", password: "" });
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
   const [error, setError] = useState("");
 
   const onChangeInput = (e) => {
@@ -19,11 +25,7 @@ export default function Login({ setIsLogin }) {
   const registerSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/users/register", {
-        username: user.name,
-        email: user.email,
-        password: user.password,
-      });
+      const res = await userRegister(user.name, user.email, user.password);
       setUser({ name: "", email: "", password: "" });
       setError(res.data.msg);
     } catch (err) {
@@ -34,10 +36,7 @@ export default function Login({ setIsLogin }) {
   const loginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/users/login", {
-        email: user.email,
-        password: user.password,
-      });
+      const res = await userLogin(user.email, user.password);
       setUser({ name: "", email: "", password: "" });
       localStorage.setItem("tokenStore", res.data.token);
       setIsLogin(true);

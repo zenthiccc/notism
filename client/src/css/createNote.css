@@ -1,0 +1,30 @@
+.create-note {
+  max-width: 500px;
+  width: 100%;
+  margin: auto;
+  border-radius: 10px;
+  padding: 30px;
+}
+
+.create-note .row {
+  width: 100%;
+  margin: 10px 0;
+}
+.create-note input,
+.create-note button {
+  width: 100%;
+  height: 40px;
+  padding: 0 5px;
+}
+
+.create-note label {
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+@media (max-width: 500px) {
+  .create-note {
+    padding: 15px;
+  }
+}

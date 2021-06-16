@@ -1,20 +1,27 @@
-# Notism - MERN Stack
+![notism](https://user-images.githubusercontent.com/72091205/122147983-72b2dd00-ce8c-11eb-808d-70865202da34.png)
 
-## Install dependencies for server 
-### `npm install`
+## Notism
 
-## Install dependencies for client
-### cd client ---> `npm install`
+##### Demo: https://notism.herokuapp.com/
 
-## Connnect to your mongodb 
+###### Create and store your notes !
 
-## Run the client & server with concurrently
-### `npm run dev`
+---
 
-## Run the Express server only
-### `npm run server`
+## Description
 
-## Run the React client only
-### `npm run client`
+Full Stack App using MERN (Mongo, Express, React, Node) Stack used to create notes and store them in to your own account.
 
+## Instructions
 
+#### Install dependencies for server: `npm install`
+
+#### Install dependencies for client: cd client ---> `npm install`
+
+#### Connnect to your mongodb
+
+#### Run the client & server with concurrently: `npm run dev`
+
+#### Run the server only: `npm run server`
+
+#### Run the client only: `npm run client`
