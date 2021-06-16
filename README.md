@@ -10,7 +10,7 @@
 
 ## Description
 
-Full Stack App using MERN (Mongo, Express, React, Node) Stack used to create notes and store them in to your own account.
+Full Stack App using MERN (Mongo, Express, React, Node) Stack used to create notes and store them in to your own account !
 
 ## Instructions
 
