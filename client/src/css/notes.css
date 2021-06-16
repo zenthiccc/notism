@@ -1,0 +1,18 @@
+.notes-page header {
+  max-width: 1920px;
+  min-height: 100px;
+  overflow: hidden;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+.notes-page header .logo {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
