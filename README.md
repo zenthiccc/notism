@@ -1,4 +1,4 @@
-![notism](https://user-images.githubusercontent.com/72091205/122147983-72b2dd00-ce8c-11eb-808d-70865202da34.png)
+![notism](demo/demo.gif)
 
 ## Notism
 
