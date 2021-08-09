@@ -10,7 +10,15 @@
 
 ## Description
 
-Full Stack App using MERN (Mongo, Express, React, Node) Stack used to create notes and store them in to your own account !
+Full Stack Web Application for creating, storing, updating, and deleting notes in your own account. 
+
+## Techstack used:
+> - MongoDB
+> - Express
+> - React
+> - Node.js
+> - Material-UI 
+> - bcrypt & JWT
 
 ## Instructions
 
