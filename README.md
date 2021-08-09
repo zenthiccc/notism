@@ -1,4 +1,4 @@
-![notism](demo/demo.gif)
+![notism](demo/demo.gif)(http://notism.herokuapp.com)
 
 ## Notism
 
