@@ -48,9 +48,3 @@ npm run server
 npm run client
 
 ```
-
-#### Run the client & server with concurrently: `npm run dev`
-
-#### Run the server only: `npm run server`
-
-#### Run the client only: `npm run client`
