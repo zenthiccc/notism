@@ -1,6 +1,14 @@
+## notism
+
+<p align="center">
+  <img src="https://img.shields.io/badge/MAINTAINED-YES-green?style=for-the-badge">
+  <img src="https://img.shields.io/badge/LICENSE-MIT-blue?style=for-the-badge">
+  <img src="https://img.shields.io/github/issues/zenthiccc/carbnb?style=for-the-badge">
+</p>
+
 ![notism](demo/demo.gif)
 
-## Notism
+
 
 ##### Demo: https://notism.herokuapp.com/
 
@@ -24,7 +32,7 @@ Full Stack Web Application for creating, storing, updating, and deleting notes i
 
 ```bash
 # Clone the repository
-git clone https://github.com/Andrei0872/invoice-app.git
+git clone https://github.com/zenthiccc/notism.git
 ```
 ```bash
 # Install dependencies for server
